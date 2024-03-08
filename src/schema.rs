@@ -11,6 +11,21 @@ diesel::table! {
 }
 
 diesel::table! {
+    credentials (id) {
+        id -> Uuid,
+        credentialTypeId -> Uuid,
+        userId -> Uuid,
+        #[max_length = 255]
+        salt -> Varchar,
+        #[max_length = 255]
+        hashed -> Varchar,
+        #[max_length = 255]
+        token -> Varchar,
+        createdAt -> Timestamp,
+    }
+}
+
+diesel::table! {
     users (id) {
         id -> Uuid,
         #[max_length = 128]
@@ -20,7 +35,11 @@ diesel::table! {
     }
 }
 
+diesel::joinable!(credentials -> credential_types (credentialTypeId));
+diesel::joinable!(credentials -> users (userId));
+
 diesel::allow_tables_to_appear_in_same_query!(
     credential_types,
+    credentials,
     users,
 );
