@@ -1,5 +1,6 @@
 use diesel::prelude::*;
 use uuid::Uuid;
+use chrono::NaiveDateTime;
 
 #[derive(Queryable, Selectable)]
 #[diesel(table_name = crate::schema::credentials)]
@@ -11,5 +12,5 @@ pub struct Credential {
     pub salt: String,
     pub hashed: String,
     pub token: String,
-    pub created_at: NaiveDateTime,
+    pub created_at: NaiveDateTime
 }
